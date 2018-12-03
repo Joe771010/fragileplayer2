@@ -1,0 +1,20 @@
+firebase資料庫是以json格式來儲存，所以每個使用者可視為一個物件，如下:
+user_name: {
+    songs: {
+        song1_id,
+        song2_id,
+        ...
+    }
+}
+
+每一首歌也是一個物件: (youtube_id應該會定義成跟song_id一樣)
+song_id: {
+    youtube_id,
+    name,
+    singer
+}
+
+-----------------------------------------------------------------------------
+
+將firebase加入react app的方法:
+在firebse project的網頁上可以取得一段script

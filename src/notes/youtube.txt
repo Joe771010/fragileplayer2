@@ -1,0 +1,21 @@
+React上面的youtube播放器是用react-youtube這個套件
+https://www.npmjs.com/package/react-youtube
+
+原本想透過youtube video id來擷取歌名、歌手等資訊，但是發現youtube其實沒有在網頁裡面放這兩項資訊，
+所以真的要的話只能從影片標題去分析
+youtube url -> youtube id -> title -> [artist, song name]
+
+先用'get-youtube-id'從youyube網址取得11碼的id，
+再用'get-youtube-title
+
+--------------------- youtube api ---------------------
+https://developers.google.com/youtube/iframe_api_reference
+
+youtube player state 總共有6種:
+-1 – unstarted
+0 – ended
+1 – playing
+2 – paused
+3 – buffering
+5 – video cued
+在<YouTube>物件被建立的同時，state會初始化為3或5(看有沒有給videoId跟autoplay)

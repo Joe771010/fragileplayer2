@@ -1,0 +1,29 @@
+SongRepository由兩個module組成: 顯示資料庫歌曲的table、新增歌曲部分
+
+顯示歌曲資料庫的table需要完成以下的功能
+(1) 排序
+(2) 分頁
+(3) 長按or右鍵 選單
+(4) toolbar
+
+
+
+===== EnhancedTableHead 筆記 =====
+* 第一個cell是放一個checkbox, 給了一個prop: padding='checkbox', 這只是跟排版有關, 影響他跟邊界的距離
+  這個checkbox還給了一個indeterminate prop, 是說當table有資料被select但是沒有全選時, 這個header的checkbox會呈現一個'-'的符號, 被稱為indeterminate
+* 接下來的幾個cell就是把名稱放上去, Tooltip的placement可以指定tooltip要對齊字首還是字尾 (tooltip我覺得不需要用到)
+  TableSortLabel是排序的箭號icon, 如果欄位是numeric, 箭號就會在左邊, 不然就會在右邊
+  排序的onClick事件也是寫在TableSortLabel的prop裡面，不過我把它搬到TabelCell的prop裡面好像也可以
+
+===== EnhancedTableToolbar 筆記 =====
+* 因為一個物件可能會套用多個class style, 所以這邊用到了classNames套件, 可以去npm看說明
+* Typography好像是一種格式工具, 可以在prop裡面設定格式, 例如'h1','h2'這種是標題字型的大小, 或是'subtitle1','subtitle2'這種
+  好處應該就是讓你不用自己指定font的大小吧?
+* 用了withStyles這個套件包起來: EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
+  這樣好像會自動把toolbarStyles變成EnhancedTableToolbar的props
+
+===== EnhancedTable 筆記 =====
+* 最外層用<Paper>包起來的原因應該只為了視覺上，會有個邊框的感覺
+* TableBody裡面顯示資料，資料要先經過sort, slice(根據目前的頁面切出要顯示的幾筆)
+* TableBody最後面有個emptyRows的，是說比如說每頁要顯示25筆但是資料只有13筆，就會再畫出12個row的空間
+* TablePagination中可以透過rowsPerPageOptions來指定每頁要顯示幾筆的下拉選單
