@@ -9,7 +9,7 @@ import {playlistDoubleClickAction, playlistToolMenuClickAction, playlistToolMenu
 class PlaylistContainer extends Component {
   render() {
     return (
-      <div>
+      <div style={{height:'100%'}}>
         <Playlist
           playlistSongs={this.props.playlistSongs}
           currentSongIndex={this.props.currentSongIndex}

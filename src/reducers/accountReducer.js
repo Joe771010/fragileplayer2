@@ -1,5 +1,5 @@
 const initialState = () => ({
-  loginAccount: 'test_user1',
+  loginAccount: undefined,
   displayLoginDialog: false,
   userNameInput: '',
 })

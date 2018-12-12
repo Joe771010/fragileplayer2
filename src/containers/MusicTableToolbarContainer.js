@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import firebase from 'firebase/app';
-import 'firebase/database';
-
 import MusicTableToolbar from '../components/MusicTableToolbar.js'
 import LoginDialog from '../components/LoginDialog.js'
 import EditSongDialog from '../components/EditSongDialog.js'
@@ -33,7 +30,7 @@ class MusicTableToolbarContainer extends Component {
       }))
     })
     return (
-      <div>
+      <div style={{paddingTop:'10px'}}>
         <MusicTableToolbar
           selected={this.props.selected}
           loginAccount={this.props.loginAccount}
@@ -42,10 +39,11 @@ class MusicTableToolbarContainer extends Component {
           event_onDeleteSongClick={this.props.event_onDeleteSongClick}
           event_onAddSongToPlaylist={()=>{
             this.props.event_onAddSongToPlaylist()
-            this.props.send_addSongToPlaylistAction(this.selectedSongs)
+            this.props.send_addSongToPlaylistAction(this.selectedSongs, this.props.loginAccount)
           }}
         />
         <LoginDialog
+          userNameInput={this.props.userNameInput}
           displayLoginDialog={this.props.displayLoginDialog}
           event_onLoginInputChange={this.props.event_onLoginInputChange}
           event_onLoginClose={(isChangingAccount)=>this.event_onLoginClose(isChangingAccount)}
@@ -83,6 +81,8 @@ const mapStateToProps = (state) => ({
   displayEditSongDialog: state.musicTableToolbarReducer.displayEditSongDialog,
   displayDeleteSongDialog: state.musicTableToolbarReducer.displayDeleteSongDialog,
   editSong: state.musicTableToolbarReducer.editSong,
+
+  currentRoom: state.playlistReducer.currentRoom,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -118,8 +118,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(deleteSongCloseAction())
   },
   // ---------- playlist ----------
-  send_addSongToPlaylistAction: (songs) => {
-    dispatch(addSongToPlaylistAction(songs))
+  send_addSongToPlaylistAction: (songs, account) => {
+    dispatch(addSongToPlaylistAction(songs, account))
   }
 })
 

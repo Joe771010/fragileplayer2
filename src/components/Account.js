@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import PlaylistToolbarContainer from '../containers/PlaylistToolbarContainer.js'
 import PlaylistContainer from '../containers/PlaylistContainer.js'
 import PlayerContainer from '../containers/PlayerContainer.js'
+import RoomContainer from '../containers/RoomContainer.js'
 
 import AddNewSongContainer from '../containers/AddNewSongContainer.js'
 import MusicTableContainer from '../containers/MusicTableContainer.js'
@@ -15,8 +16,19 @@ import { withStyles } from '@material-ui/core/styles';
 class Account extends Component {
   render() {
     const {classes} = this.props;
+    const playlist = (
+      <PlaylistContainer
+        event_onPlaylistSongMove={this.props.event_onPlaylistSongMove}
+      />
+    );
+    const room = (
+      <RoomContainer
+        event_onRoomSongDelete={this.props.event_onRoomSongDelete}
+      />
+    );
+
     return (
-      <Grid container spacing={8}>
+      <Grid container spacing={8} className={classes.main}>
 
         <Grid item container spacing={8}>
           <Grid item xs={7} className={classes.musicTableToolbarBorder}>
@@ -39,9 +51,7 @@ class Account extends Component {
             <MusicTableContainer />
           </Grid>
           <Grid item xs={5} className={classes.playlistBorder}>
-            <PlaylistContainer
-              event_onPlaylistSongMove={this.props.event_onPlaylistSongMove}
-            />
+            {this.props.currentRoom===undefined? playlist: room}
           </Grid>
         </Grid>
 
@@ -61,35 +71,47 @@ class Account extends Component {
 }
 
 const styles = theme => ({
+  main: {
+    maxWidth: '1200px',
+  },
   musicTableToolbarBorder: {
-    borderWidth: '1px',
-    borderColor: '#FFCDD2',
-    borderStyle: 'dashed',
+    // borderWidth: '1px',
+    // borderColor: '#FFCDD2',
+    // borderStyle: 'dashed',
+    // backgroundColor: '#424242',
+    // borderRadius: '5px',
   },
   playlistToolbarBorder: {
-    borderWidth: '1px',
-    borderColor: '#1DE9B6',
-    borderStyle: 'dashed'
+    // borderWidth: '1px',
+    // borderColor: '#1DE9B6',
+    // borderStyle: 'dashed',
+    // backgroundColor: '#424242',
+    // borderRadius: '5px',
   },
   musicTableBorder: {
-    borderWidth: '1px',
-    borderColor: '#D50000',
-    borderStyle: 'dashed'
+    // borderWidth: '1px',
+    // borderColor: '#D50000',
+    // borderStyle: 'dashed',
   },
   addNewSongBorder: {
-    borderWidth: '1px',
-    borderColor: '#B388FF',
-    borderStyle: 'dashed'
+    // borderWidth: '1px',
+    // borderColor: '#B388FF',
+    // borderStyle: 'dashed',
+    // backgroundColor: '#424242',
+    // background: 'linear-gradient(to bottom, #424242, #313131)',
+    // borderRadius: '5px',
   },
   playlistBorder: {
-    borderWidth: '1px',
-    borderColor: '#424242',
-    borderStyle: 'dashed'
+    // borderWidth: '1px',
+    // borderColor: '#424242',
+    // borderStyle: 'dashed',
   },
   playerBorder: {
-    borderWidth: '1px',
-    borderColor: '#FFD600',
-    borderStyle: 'dashed'
+    // borderWidth: '1px',
+    // borderColor: '#FFD600',
+    // borderStyle: 'dashed',
+    // backgroundColor: '#424242',
+    // borderRadius: '5px',
   }
 });
 

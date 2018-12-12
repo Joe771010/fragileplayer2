@@ -130,17 +130,42 @@ class AccountContainer extends Component {
   }
 
   event_onAddSongToPlaylist() {
+    let data;
+    let selectedSong;
+    // add song to room
+    if (this.props.currentRoom !== undefined) {
+      // current songs in playlist
+      data = this.props.playlistSongs.map(song => ({
+        title: song.title,
+        artist: song.artist,
+        videoId: song.videoId,
+        owner: song.owner,
+      }));
+      // selected songs
+      this.props.selected.forEach(s => {
+        selectedSong = this.props.songs.find(x=>x.id===s);
+        data.push({
+          title: selectedSong.title,
+          artist: selectedSong.artist,
+          videoId: selectedSong.videoId,
+          owner: this.props.loginAccount,
+        })
+      })
+      this.updateRoom(data, this.props.currentRoom);
+      return;
+    }
+
+    // add song to playlist (臨時歌單不儲存資料庫)
     if (this.props.currentPlaylist===undefined || this.props.currentPlaylist==='臨時歌單') return;
-    // update playlist database: current songs in playlist + new added songs
     // current songs in playlist
-    let data = this.props.playlistSongs.map(song => ({
+    data = this.props.playlistSongs.map(song => ({
       title: song.title,
       artist: song.artist,
       videoId: song.videoId
     }));
     // selected songs
     this.props.selected.forEach(s => {
-      let selectedSong = this.props.songs.find(x=>x.id===s);
+      selectedSong = this.props.songs.find(x=>x.id===s);
       data.push({
         title: selectedSong.title,
         artist: selectedSong.artist,
@@ -176,6 +201,16 @@ class AccountContainer extends Component {
     this.updatePlaylist(newPlaylistSongs, this.props.currentPlaylist)
   }
 
+  event_onRoomSongDelete(song, index) {
+    if (song.owner !== this.props.loginAccount) {
+      alert('not the song owner')
+      return;
+    }
+    let newPlaylistSongs = [...this.props.playlistSongs];
+    newPlaylistSongs.splice(index, 1)
+    this.updateRoom(newPlaylistSongs, this.props.currentRoom)
+  }
+
   updatePlaylist(songs, playlist) {
     songs = songs.map((song)=>({
       title: song.title,
@@ -183,6 +218,17 @@ class AccountContainer extends Component {
       video_id: song.videoId
     }))
     this.firebaseRef = firebase.database().ref('users/' + this.props.loginAccount + '/playlists/' + playlist);
+    this.firebaseRef.set(songs);
+  }
+
+  updateRoom(songs, room) {
+    songs = songs.map((song)=>({
+      title: song.title,
+      artist: song.artist,
+      video_id: song.videoId,
+      owner: song.owner,
+    }))
+    this.firebaseRef = firebase.database().ref('rooms/' + room);
     this.firebaseRef.set(songs);
   }
 
@@ -224,6 +270,7 @@ class AccountContainer extends Component {
   render() {
     return (
       <Account
+        currentRoom={this.props.currentRoom}
         event_onLoginAccountChange={(accountName)=>this.event_onLoginAccountChange(accountName)}
         event_finishEditSong={(result)=>this.event_finishEditSong(result)}
         event_finishDeleteSong={(result)=>this.event_finishDeleteSong(result)}
@@ -231,6 +278,7 @@ class AccountContainer extends Component {
         event_addNewSong={()=>this.event_addNewSong()}
         event_onDeletePlaylist={()=>this.event_onDeletePlaylist()}
         event_onPlaylistSongMove={(type)=>this.event_onPlaylistSongMove(type)}
+        event_onRoomSongDelete={(song, index)=>this.event_onRoomSongDelete(song, index)}
       />
     )
   }
@@ -249,6 +297,8 @@ const mapStateToProps = (state) => ({
 
   currentPlaylist: state.playlistReducer.currentPlaylist,
   playlistSongs: state.playlistReducer.playlistSongs,
+
+  currentRoom: state.playlistReducer.currentRoom,
 
   toolMenuIndex: state.playlistReducer.toolMenuIndex,
 })

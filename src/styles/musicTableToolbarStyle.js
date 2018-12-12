@@ -1,7 +1,7 @@
 const styles = theme => ({
   toolbar: {
-    borderColor: '#FFCDD2',
-    borderStyle: 'dashed'
+    backgroundColor: '#424242',
+    borderRadius: '5px',
   },
   accountCircle: {
     paddingRight: '10px'

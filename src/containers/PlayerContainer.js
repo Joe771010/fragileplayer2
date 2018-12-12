@@ -175,7 +175,7 @@ class PlayerContainer extends Component {
     let duration = this.props.youtube? this.props.youtube.getDuration(): 0;
 
     return (
-      <div>
+      <div style={{height:'100%'}}>
         <Player
           song={this.props.song}
           playMode={this.props.playMode}

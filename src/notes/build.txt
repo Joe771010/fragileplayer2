@@ -1,0 +1,14 @@
+執行 yarn build 後，會在build資料夾產生一堆檔案，要稍微修改index.html
+把裡面兩個<script src=''>的路徑前面多加一個.，變成
+<script src="./static/js/1.4ca3b6db.chunk.js">
+<script src="./static/js/main.1a2ba7ba.chunk.js">
+
+或是
+
+在package.json裡面加上一行 "homepage": "."
+這樣build出來的indel.html裡面就會自動加上'.'了
+
+改好之後把所有檔案都放到github.io的repository: C:\Web\joe771010.github.io\fragileplayer2
+然後commit -> push即可
+
+網頁的網址為 https://joe771010.github.io/fragileplayer2/

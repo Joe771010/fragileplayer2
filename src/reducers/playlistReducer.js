@@ -14,6 +14,13 @@ const initialState = () => ({
   // dialog for removing playlist
   displayDeletePlaylistDialog: false,
 
+  // dialog for entering room
+  displayEnterRoomDialog: false,
+  enterRoomName: '',
+
+  // room
+  currentRoom: undefined,
+
   // menu for song moving and deleting
   toolMenuAnchor: null,
   toolMenuIndex: undefined,
@@ -30,7 +37,8 @@ const playlistReducer = (state = initialState(), action) => {
       let newSongsArray = action.songs.map(song=>({
         videoId: song.videoId,
         title: song.title,
-        artist: song.artist
+        artist: song.artist,
+        owner: action.account,
       }));
       if (state.currentPlaylist === undefined) {
         return Object.assign({}, state, {
@@ -54,7 +62,7 @@ const playlistReducer = (state = initialState(), action) => {
       return Object.assign({}, state, {
         displayNewPlaylistDialog: true,
       })
-    case 'NEW_PLAYLIST_CLOSE':
+    case 'NEW_PLAYLIST_DIALOG_CLOSE':
       return Object.assign({}, state, {
         displayNewPlaylistDialog: false,
         newPlaylist: '',
@@ -62,16 +70,16 @@ const playlistReducer = (state = initialState(), action) => {
         playlists: action.success? [...state.playlists, state.newPlaylist]: state.playlists,
         playlistSongs: action.success? []:state.playlistSongs
       })
-    case 'NEW_PLAYLIST_CHANGE':
+    case 'NEW_PLAYLIST_INPUT_CHANGE':
       return Object.assign({}, state, {
         newPlaylist: action.name
       })
-    case 'DELETE_PLAYLIST_OPEN':
+    case 'DELETE_PLAYLIST_DIALOG_OPEN':
       if (state.currentPlaylist === undefined) return state
       return Object.assign({}, state, {
         displayDeletePlaylistDialog: true,
       })
-    case 'DELETE_PLAYLIST_CLOSE':
+    case 'DELETE_PLAYLIST_DIALOG_CLOSE':
       return Object.assign({}, state, {
         displayDeletePlaylistDialog: false,
         currentPlaylist: action.ok? undefined: state.currentPlaylist,
@@ -83,6 +91,7 @@ const playlistReducer = (state = initialState(), action) => {
         playlists: action.playlists,
         playlistSongs: [],
         currentPlaylist: undefined,
+        currentRoom: undefined,
       })
     case 'PLAYLIST_CHANGE':
       return Object.assign({}, state, {
@@ -140,6 +149,33 @@ const playlistReducer = (state = initialState(), action) => {
         playlistSongs: newPlaylistSongs,
         toolMenuAnchor: null,
         toolMenuIndex: undefined
+      })
+    case 'ENTER_ROOM_OPEN':
+      return Object.assign({}, state, {
+        displayEnterRoomDialog: true,
+      })
+    case 'ENTER_ROOM_DIALOG_CLOSE':
+      return Object.assign({}, state, {
+        displayEnterRoomDialog: false,
+        currentRoom: action.ok? state.enterRoomName: state.currentRoom,
+        currentPlaylist: action.ok? undefined: state.currentPlaylist,
+      })
+    case 'ENTER_ROOM_INPUT_CHANGE':
+      return Object.assign({}, state, {
+        enterRoomName: action.name
+      })
+    case 'LEAVE_ROOM':
+      return Object.assign({}, state, {
+        currentRoom: undefined,
+        currentPlaylist: undefined,
+        currentSongIndex: 0,
+        playlistSongs: [],
+      })
+    case 'ROOM_SONG_DELETE':
+      newPlaylistSongs = [...state.playlistSongs]
+      newPlaylistSongs.splice(action.index, 1)
+      return Object.assign({}, state, {
+        playlistSongs: newPlaylistSongs,
       })
     default:
       return state

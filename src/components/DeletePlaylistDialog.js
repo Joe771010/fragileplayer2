@@ -11,7 +11,7 @@ class DeletePlaylistDialog extends Component {
       <Dialog
         open = {this.props.displayDeletePlaylistDialog}
         modal = 'true'
-        onClose = {()=>this.props.event_onDeletePlaylistClose(false)}
+        onClose = {()=>this.props.event_onDeletePlaylistDialogClose(false)}
       >
         <DialogContent>
           <DialogContentText>
@@ -19,10 +19,10 @@ class DeletePlaylistDialog extends Component {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button color='secondary' onClick={()=>this.props.event_onDeletePlaylistClose(true)} >
+          <Button color='secondary' onClick={()=>this.props.event_onDeletePlaylistDialogClose(true)} >
             OK
           </Button>
-          <Button color='primary' onClick={()=>this.props.event_onDeletePlaylistClose(false)} >
+          <Button color='primary' onClick={()=>this.props.event_onDeletePlaylistDialogClose(false)} >
             Cancel
           </Button>
         </DialogActions>

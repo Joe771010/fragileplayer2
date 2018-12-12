@@ -11,36 +11,17 @@ import { withStyles } from '@material-ui/core/styles';
 class PlaylistToolbar extends Component {
   render() {
     const {classes} = this.props;
-    // return (
-    //   <Toolbar>
-    //     <Select
-    //       value={this.props.currentPlaylist===undefined? '':this.props.currentPlaylist}
-    //       onChange={this.props.event_onPlaylistChange}
-    //     >
-    //       {this.props.playlists.map((list, index) => {
-    //         return (
-    //           <MenuItem value={list} key={index}>
-    //             {list}
-    //           </MenuItem>
-    //         )
-    //       })}
-    //     </Select>
-    //     <Button onClick={this.props.event_onNewPlaylistClick}>
-    //       New
-    //     </Button>
-    //     <Button onClick={this.props.event_onDeletePlaylistClick}>
-    //       Delete
-    //     </Button>
-    //   </Toolbar>
-    // );
+    const roomString = this.props.currentRoom===undefined? 'Enter Room': ('Leave '+ this.props.currentRoom);
+    const disableTools = this.props.currentRoom!==undefined;
 
     return (
-      <Toolbar>
+      <Toolbar className={classes.toolbar}>
         <Grid container spacing={0} >
-          <Grid item xs={5} >
+          <Grid item xs={4} >
             <Select
               className={classes.select}
               fullWidth
+              disabled={disableTools}
               value={this.props.currentPlaylist===undefined? '':this.props.currentPlaylist}
               onChange={this.props.event_onPlaylistChange}
             >
@@ -54,13 +35,18 @@ class PlaylistToolbar extends Component {
             </Select>
           </Grid>
           <Grid item xs={2} >
-            <Button fullWidth color='secondary' onClick={this.props.event_onNewPlaylistClick}>
+            <Button disabled={disableTools} fullWidth color='secondary' onClick={this.props.event_onNewPlaylistClick}>
               New
             </Button>
           </Grid>
           <Grid item xs={2} >
-            <Button fullWidth color='primary' onClick={this.props.event_onDeletePlaylistClick}>
+            <Button disabled={disableTools} fullWidth color='primary' onClick={this.props.event_onDeletePlaylistClick}>
               Delete
+            </Button>
+          </Grid>
+          <Grid item xs={4} >
+            <Button className={classes.roomButton} fullWidth onClick={this.props.event_onEnterLeaveRoomClick}>
+              {roomString}
             </Button>
           </Grid>
         </Grid>
@@ -70,27 +56,19 @@ class PlaylistToolbar extends Component {
 }
 
 const styles = theme => ({
-  border1: {
-    borderColor: '#1DE9B6',
-    borderStyle: 'dashed'
-  },
-  border2: {
-    borderColor: '#00E5FF',
-    borderStyle: 'dashed',
-  },
   select: {
     fontFamily: 'Verdana',
   },
   menuItem: {
     fontFamily: 'Verdana',
   },
-  border3: {
-    borderColor: '#EC407A',
-    borderStyle: 'dashed'
+  roomButton: {
+    //fontFamily: 'Verdana',
+    textTransform:'none',
   },
-  border4: {
-    borderColor: '#FF9800',
-    borderStyle: 'dashed'
+  toolbar: {
+    backgroundColor: '#424242',
+    borderRadius: '5px',
   }
 })
 

@@ -6,12 +6,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
-import Tooltip from '@material-ui/core/Tooltip';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
 
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import styles from '../styles/musicTableStyle.js'
 
@@ -24,9 +22,9 @@ class EnhancedTableHead extends Component {
   render() {
     const {classes} = this.props;
     return (
-      <TableHead>
-        <TableRow>
-          <TableCell padding="checkbox" className={classes.header}>
+      <TableHead >
+        <TableRow className={classes.header}>
+          <TableCell padding="checkbox" className={classes.headerCell}>
             <Checkbox
               onChange={this.props.event_onSelectAll}
             />
@@ -34,7 +32,7 @@ class EnhancedTableHead extends Component {
           {this.headerColumns.map(row => {
             return (
               <TableCell
-                className={classes.header}
+                className={classes.headerCell}
                 key={row.id}
                 numeric={row.numeric}
                 padding={row.disablePadding ? 'none' : 'default'}
@@ -74,15 +72,16 @@ class EnhancedTable extends Component {
             />
             <TableBody>
               {this.props.songs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(song => {
+                const isSelected = this.props.selected.includes(song.id);
                 return (
                   <TableRow
                     hover
+                    selected={isSelected}
                     onClick = {(event) => this.props.event_onSelect(event, song.id)}
                     onDoubleClick = {()=>this.props.event_onDoubleClick(song)}
                     key = {song.id}
                   >
                     <TableCell padding="checkbox">
-                      <Checkbox checked={this.props.selected.includes(song.id)}/>
                     </TableCell>
                     <TableCell className={classes.cell}>
                       {song.title}

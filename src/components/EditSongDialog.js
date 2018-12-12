@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 
 import Grid from '@material-ui/core/Grid';

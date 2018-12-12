@@ -4,18 +4,26 @@ const styles = theme => ({
     borderStyle: 'dashed',
   },
   table: {
-    height: '600px',
-    overflow: 'auto'
+    height: '585px',
+    overflow: 'auto',
+    borderRadius: '5px',
+    background: 'linear-gradient(to left, #424242, #37474F)'
   },
   header: {
+    // background: 'linear-gradient(to left, #424242, #37474F)',
+    // position: 'sticky',
+    // top: 0,
+    // zIndex: 15,
+  },
+  headerCell: {
     fontFamily: 'Verdana',
     fontSize: '14pt',
-    color: '#01579B',
+    color: '#F48FB1',
     position: 'sticky',
+    backgroundColor: "#424242",
+    // background: 'linear-gradient(to left, #424242, #37474F)',
     top: 0,
-    backgroundColor: "#fff",
     zIndex: 10,
-
   },
   headerPosition: {
     position: 'sticky',

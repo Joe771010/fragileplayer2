@@ -21,58 +21,13 @@ class Player extends Component {
     const {classes} = this.props;
     const playIconButton = this.props.youtubeState===0? <Replay />:
                            this.props.youtubeState===1? <PauseCircleOutline />: <PlayCircleOutline />
-    // return (
-    //   <div >
-    //     <div>
-    //       <IconButton
-    //       >
-    //         <SkipPrevious />
-    //       </IconButton>
-    //       <IconButton
-    //         onClick={this.props.event_onPlayClick}
-    //       >
-    //         {playIconButton}
-    //       </IconButton>
-    //       <IconButton
-    //       >
-    //         <SkipNext />
-    //       </IconButton>
-    //     </div>
-    //
-    //     <div>
-    //       {this.props.song.title} - {this.props.song.artist}
-    //       <Slider
-    //         value={this.props.currentTime}
-    //         min = {0}
-    //         max = {this.props.duration}
-    //         onChange={this.props.event_onTimeChange}
-    //       />
-    //     </div>
-    //
-    //     <div>
-    //       <Slider
-    //         value={this.props.volume}
-    //         min = {0}
-    //         max = {100}
-    //         defaultValue = {20}
-    //         onChange = {this.props.event_onVolumeChange}
-    //       />
-    //     </div>
-    //
-    //     <div>
-    //       <Select value={this.props.playMode} onChange={this.props.event_onPlayModeChange}>
-    //         <MenuItem  value={1} >依序播放</MenuItem>
-    //         <MenuItem  value={2} >單曲循環</MenuItem>
-    //         <MenuItem  value={3} >隨機播放</MenuItem>
-    //       </Select>
-    //     </div>
-    //   </div>
-    // );
+
 
     return (
+      <div className={classes.div}>
       <Grid container spacing={0} >
         <Grid item xs={12}>
-          <div align='center' style={{padding:'10px 0 5px 0'}}>{this.props.song.title} - {this.props.song.artist}</div>
+          <div align='center' className={classes.info}>{this.props.song.title} - {this.props.song.artist}</div>
         </Grid>
 
         <Grid item xs={12} container justify='center'>
@@ -131,6 +86,7 @@ class Player extends Component {
         </Grid>
 
       </Grid>
+      </div>
     );
   }
 }

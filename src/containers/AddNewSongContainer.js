@@ -1,11 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import firebase from 'firebase/app';
-import 'firebase/database';
-
-
-
 import AddNewSong from '../components/AddNewSong.js'
 
 import {urlChangeAction, artistChangeAction, titleChangeAction, autoSetInfoAction, clearInputAction, } from '../actions/addNewSongActions'
@@ -19,13 +14,13 @@ import * as getArtistTitle from 'get-artist-title';
 
 class AddNewSongContainer extends Component {
   render() {
-    const {url, videoId, artist, title} = this.props;
+    const {url, videoId, artist, title, loginAccount} = this.props;
     return (
       <AddNewSong
         url = {url}
         title = {title}
         artist = {artist}
-        ready = {videoId!=='' && title!=='' && artist!==''}
+        ready = {videoId!=='' && title!=='' && artist!=='' && loginAccount!==undefined}
         event_urlOnChange = {this.props.event_urlOnChange}
         event_artistOnChange = {this.props.event_artistOnChange}
         event_titleOnChange = {this.props.event_titleOnChange}
