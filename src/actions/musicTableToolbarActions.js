@@ -24,3 +24,11 @@ export const deleteSongOpenAction = () => ({
 export const deleteSongCloseAction = () => ({
   type: 'DELETE_SONG_CLOSE',
 })
+
+export const helpAction = () => ({
+  type: 'OPEN_HELP_DIALOG',
+})
+
+export const helpCloseAction = () => ({
+  type: 'CLOSE_HELP_DIALOG',
+})

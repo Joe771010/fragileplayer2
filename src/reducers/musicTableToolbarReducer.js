@@ -2,6 +2,7 @@ const initialState = () => ({
   editSong: {},
   displayEditSongDialog: false,
   displayDeleteSongDialog: false,
+  displayHelpDialog: false,
 })
 
 const musicTableToolbarReducer = (state = initialState(), action) => {
@@ -35,6 +36,14 @@ const musicTableToolbarReducer = (state = initialState(), action) => {
     case 'DELETE_SONG_CLOSE':
       return Object.assign({}, state, {
         displayDeleteSongDialog: false,
+      })
+    case 'OPEN_HELP_DIALOG':
+      return Object.assign({}, state, {
+        displayHelpDialog: true,
+      })
+    case 'CLOSE_HELP_DIALOG':
+      return Object.assign({}, state, {
+        displayHelpDialog: false,
       })
     default:
       return state;

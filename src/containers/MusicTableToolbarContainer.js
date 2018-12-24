@@ -5,9 +5,10 @@ import MusicTableToolbar from '../components/MusicTableToolbar.js'
 import LoginDialog from '../components/LoginDialog.js'
 import EditSongDialog from '../components/EditSongDialog.js'
 import DeleteSongDialog from '../components/DeleteSongDialog.js'
+import HelpDialog from '../components/HelpDialog.js'
 
 import {loginOpenAction, loginInputChangeAction, loginCloseAction, resetAccountAction} from '../actions/accountActions.js'
-import {editSongOpenAction, editSongCloseAction, editSongTitleChangeAction, editSongArtistChangeAction, deleteSongOpenAction, deleteSongCloseAction} from '../actions/musicTableToolbarActions.js'
+import {editSongOpenAction, editSongCloseAction, editSongTitleChangeAction, editSongArtistChangeAction, deleteSongOpenAction, deleteSongCloseAction, helpAction, helpCloseAction} from '../actions/musicTableToolbarActions.js'
 import {addSongToPlaylistAction} from '../actions/playlistActions.js'
 
 class MusicTableToolbarContainer extends Component {
@@ -37,6 +38,7 @@ class MusicTableToolbarContainer extends Component {
           event_onLoginClick={this.props.event_onLoginClick}
           event_onEditSongClick={()=>this.props.event_onEditSongClick(this.selectedSongs[0])}
           event_onDeleteSongClick={this.props.event_onDeleteSongClick}
+          event_onHelpClick={this.props.event_onHelpClick}
           event_onAddSongToPlaylist={()=>{
             this.props.event_onAddSongToPlaylist()
             this.props.send_addSongToPlaylistAction(this.selectedSongs, this.props.loginAccount)
@@ -65,6 +67,10 @@ class MusicTableToolbarContainer extends Component {
             this.props.event_onDeleteSongClose()}
           }
         />
+        <HelpDialog
+          displayHelpDialog = {this.props.displayHelpDialog}
+          event_onHelpClose = {this.props.event_onHelpClose}
+        />
       </div>
     )
   }
@@ -80,6 +86,7 @@ const mapStateToProps = (state) => ({
 
   displayEditSongDialog: state.musicTableToolbarReducer.displayEditSongDialog,
   displayDeleteSongDialog: state.musicTableToolbarReducer.displayDeleteSongDialog,
+  displayHelpDialog: state.musicTableToolbarReducer.displayHelpDialog,
   editSong: state.musicTableToolbarReducer.editSong,
 
   currentRoom: state.playlistReducer.currentRoom,
@@ -120,6 +127,13 @@ const mapDispatchToProps = (dispatch) => ({
   // ---------- playlist ----------
   send_addSongToPlaylistAction: (songs, account) => {
     dispatch(addSongToPlaylistAction(songs, account))
+  },
+  // ---------- help ----------
+  event_onHelpClick: () => {
+    dispatch(helpAction())
+  },
+  event_onHelpClose: () => {
+    dispatch(helpCloseAction())
   }
 })
 

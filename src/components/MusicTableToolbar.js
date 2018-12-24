@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import HelpOutline from '@material-ui/icons/HelpOutline';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
@@ -20,7 +21,7 @@ class MusicTableToolbar extends Component {
     return (
         <Toolbar className={classes.toolbar}>
           <Grid container spacing={0}>
-            <Grid item xs={6}>
+            <Grid item xs={6} >
               <Button
                 className={classes.button}
                 color='primary'
@@ -44,6 +45,11 @@ class MusicTableToolbar extends Component {
               <Grid item>
                 <Button color='primary' disabled={numSelected===0} onClick={this.props.event_onAddSongToPlaylist}>
                   <PlaylistAdd />
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button color='primary' onClick={this.props.event_onHelpClick}>
+                  <HelpOutline />
                 </Button>
               </Grid>
             </Grid>
